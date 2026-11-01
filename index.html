@@ -5,28 +5,159 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>موسيقى موزارت للعالم | Mozart Forever</title>
     <style>
-        body { background-color: #121212; color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .container { background-color: #1e1e1e; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; max-width: 500px; width: 90%; border: 1px solid #333; }
-        h1 { color: #d4af37; margin-bottom: 10px; font-size: 28px; }
-        p { color: #aaaaaa; font-size: 14px; margin-bottom: 30px; }
-        .player { background-color: #2a2a2a; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
-        audio { width: 100%; margin-top: 15px; outline: none; }
-        .track-name { font-size: 18px; font-weight: bold; color: #ffffff; }
-        .footer { margin-top: 30px; font-size: 12px; color: #666; }
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #1e1e1e;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid #333;
+            text-align: center;
+        }
+        h1 {
+            color: #d4af37;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 26px;
+        }
+        p {
+            color: #aaaaaa;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .main-player {
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid #444;
+        }
+        #current-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #d4af37;
+            margin-bottom: 10px;
+            display: block;
+        }
+        audio {
+            width: 100%;
+            outline: none;
+        }
+        .playlist-title {
+            text-align: right;
+            font-size: 18px;
+            color: #fff;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .playlist {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .playlist li {
+            background-color: #252525;
+            padding: 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: right;
+            font-size: 15px;
+        }
+        .playlist li:hover {
+            background-color: #333;
+            border-right: 4px solid #d4af37;
+        }
+        .playlist li.active {
+            background-color: #333;
+            border-right: 4px solid #d4af37;
+            color: #d4af37;
+        }
+        .icon {
+            color: #d4af37;
+            font-size: 18px;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
+
     <div class="container">
         <h1>Wolfgang Amadeus Mozart</h1>
         <p>موسيقى خالدة للعالم أجمع - إلى الأبد</p>
-        <div class="player">
-            <div class="track-name">Symphony No. 40 in G Minor (K. 550)</div>
-            <audio controls>
-                <source src="https://ia800905.us.archive.org/15/items/MozartSymphonyNo.40InGMinorK550/Mozart_Symphony_No.40_in_G_minor_K.550.mp3" type="audio/mpeg">
+
+        <!-- المشغل الرئيسي -->
+        <div class="main-player">
+            <span id="current-title">اختر مقطوعة من القائمة للبدء</span>
+            <audio id="audio-player" controls>
+                <source id="audio-source" src="" type="audio/mpeg">
                 متصفحك لا يدعم تشغيل الصوت.
             </audio>
         </div>
-        <div class="footer">مفتوح المصدر - للجميع - للأبد | GitHub Pages</div>
+
+        <!-- قائمة التشغيل -->
+        <div class="playlist-title">أشهر أعمال موزارت (Playlist)</div>
+        <ul class="playlist">
+            <li onclick="playTrack('https://ia800905.us.archive.org/15/items/MozartSymphonyNo.40InGMinorK550/Mozart_Symphony_No.40_in_G_minor_K.550.mp3', 'Symphony No. 40 in G Minor (K. 550)', this)">
+                <span>سيمفونية رقم 40</span> <span class="icon">🎵</span>
+            </li>
+            <li onclick="playTrack('https://upload.wikimedia.org/wikipedia/commons/transcoded/4/4c/Turkish_March.ogg/Turkish_March.ogg.mp3', 'Piano Sonata No. 11 (Turkish March)', this)">
+                <span>مارش التركي (Turkish March)</span> <span class="icon">🎵</span>
+            </li>
+            <li onclick="playTrack('https://upload.wikimedia.org/wikipedia/commons/transcoded/2/24/Mozart_-_Eine_kleine_Nachtmusik_-_1._Allegro.ogg/Mozart_-_Eine_kleine_Nachtmusik_-_1._Allegro.ogg.mp3', 'Eine kleine Nachtmusik (A Little Night Music)', this)">
+                <span>موسيقى الليل الصغيرة</span> <span class="icon">🎵</span>
+            </li>
+        </ul>
+
+        <div class="footer">
+            مفتوح المصدر - للجميع - للأبد | GitHub Pages
+        </div>
     </div>
+
+    <!-- الكود البرمجي لتشغيل الموسيقى -->
+    <script>
+        function playTrack(url, title, element) {
+            var audio = document.getElementById('audio-player');
+            var source = document.getElementById('audio-source');
+            var currentTitle = document.getElementById('current-title');
+            
+            // تغيير الرابط والاسم
+            source.src = url;
+            currentTitle.innerText = title;
+            
+            // إعادة تحميل المشغل وتشغيله
+            audio.load();
+            audio.play();
+            
+            // تغيير لون العنصر المحدد
+            var items = document.querySelectorAll('.playlist li');
+            items.forEach(function(item) {
+                item.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+    </script>
+
 </body>
 </html>
